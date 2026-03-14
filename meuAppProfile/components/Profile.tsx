@@ -1,32 +1,48 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, Linking, TouchableOpacity } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+
 
 export default function Profile() {
   return (
     <View style={styles.card}>
 
-      {/* Foto de perfil */}
+     
       <Image
         source={require("../assets/images/ZS_9.png")}
         style={styles.photo}
       />
 
-      {/* Nome */}
+     
       <Text style={styles.name}>Matheus Vinnycius</Text>
 
-      {/* Bio */}
+     
       <Text style={styles.bio}>
         Estudante de Sistemas para Internet na UNICAP.
         Apaixonado por tecnologia e programação.
         Gosto de criar projetos e liderar equipes.
       </Text>
 
-      {/* Ícones sociais */}
       <View style={styles.socials}>
-        <FontAwesome name="github" size={28} color="black" />
-        <FontAwesome name="instagram" size={28} color="#E1306C" />
-        <FontAwesome name="linkedin" size={28} color="#0077B5" />
-      </View>
+
+  <TouchableOpacity
+    onPress={() => Linking.openURL("https://github.com/MatheusV2021")}
+  >
+    <FontAwesome name="github" size={28} color="black" />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    onPress={() => Linking.openURL("https://www.instagram.com/mat_v15/")}
+  >
+    <FontAwesome name="instagram" size={28} color="#E1306C" />
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    onPress={() => Linking.openURL("https://www.linkedin.com/in/matheus-vinnycius/")}
+  >
+    <FontAwesome name="linkedin" size={28} color="#0077B5" />
+  </TouchableOpacity>
+
+</View>
 
     </View>
   );
