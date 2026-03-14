@@ -11,7 +11,7 @@ export default function HomeScreen() {
 
       
       <Text style={styles.title}>
-        App criado para a disciplina Programação para Dispositivos Móveis
+        Programação para Dispositivos Móveis
       </Text>
 
    
