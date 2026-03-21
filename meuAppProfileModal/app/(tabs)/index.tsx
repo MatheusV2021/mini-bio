@@ -1,98 +1,194 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { View, Text, Image, StyleSheet, Linking, TouchableOpacity, Modal } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
+import { useState } from "react";
 
 export default function HomeScreen() {
-  return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+  const [modalVisible, setModalVisible] = useState(false);
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+  return (
+    <View style={styles.container}>
+      <View style={styles.card}>
+        <Image
+          source={require("../../assets/images/ZS_9.png")}
+          style={styles.photo}
+        />
+
+        <Text style={styles.name}>Matheus Vinnycius</Text>
+
+        <Text style={styles.bio}>
+          Estudante de Sistemas para Internet na UNICAP. Apaixonado por
+          tecnologia e programação. Gosto de criar projetos e liderar equipes.
+        </Text>
+
+        <View style={styles.socials}>
+          <TouchableOpacity onPress={() => Linking.openURL("https://github.com/MatheusV2021")}>
+            <FontAwesome name="github" size={32} color="#333" />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => Linking.openURL("https://www.instagram.com/mat_v15/")}>
+            <FontAwesome name="instagram" size={32} color="#E1306C" />
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => Linking.openURL("https://www.linkedin.com/in/matheus-vinnycius/")}>
+            <FontAwesome name="linkedin-square" size={32} color="#0077B5" />
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.buttonText}>Ver mais detalhes</Text>
+        </TouchableOpacity>
+      </View>
+
+      <Modal
+        visible={modalVisible}
+        animationType="fade"
+        transparent={true}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Mais sobre mim</Text>
+
+            <Text style={styles.modalText}>
+              • Técnico em Desenvolvimento de Sistemas
+            </Text>
+            <Text style={styles.modalText}>
+              • Estudante de Sistemas para Internet
+            </Text>
+            <Text style={styles.modalText}>
+              • Experiência com Python, Java, Jira e Figma
+            </Text>
+            <Text style={styles.modalText}>
+              • Interesse em IA e visão computacional
+            </Text>
+            <Text style={styles.modalText}>
+              • Participação em projetos e hackathons
+            </Text>
+
+            <TouchableOpacity
+              style={styles.closeButton}
+              onPress={() => setModalVisible(false)}
+            >
+              <Text style={styles.closeButtonText}>Fechar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: "#f2f6fc",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+
+  card: {
+    alignItems: "center",
+    backgroundColor: "#ffffff",
+    padding: 30,
+    borderRadius: 20,
+    shadowColor: "#000",
+    shadowOpacity: 0.15,
+    shadowRadius: 15,
+    shadowOffset: { width: 0, height: 5 },
+    elevation: 8,
+    width: "100%",
+    maxWidth: 350,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+
+  photo: {
+    width: 160,
+    height: 160,
+    borderRadius: 80,
+    borderWidth: 4,
+    borderColor: "#007AFF",
+    marginBottom: 15,
+  },
+
+  name: {
+    fontSize: 26,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+
+  bio: {
+    textAlign: "center",
+    fontSize: 15,
+    color: "#555",
+    maxWidth: 260,
+    marginBottom: 15,
+  },
+
+  socials: {
+    flexDirection: "row",
+    gap: 25,
+    marginTop: 10,
+    marginBottom: 20,
+  },
+
+  button: {
+    backgroundColor: "#007AFF",
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+    marginTop: 10,
+  },
+
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.55)", // 🔥 semi-transparente
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+
+  modalContent: {
+    backgroundColor: "#fff",
+    width: "100%",
+    maxWidth: 340,
+    borderRadius: 20,
+    padding: 25,
+    alignItems: "center",
+  },
+
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 15,
+  },
+
+  modalText: {
+    fontSize: 15,
+    color: "#444",
+    marginBottom: 10,
+    textAlign: "center",
+  },
+
+  closeButton: {
+    marginTop: 20,
+    backgroundColor: "#007AFF",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 12,
+  },
+
+  closeButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
   },
 });
